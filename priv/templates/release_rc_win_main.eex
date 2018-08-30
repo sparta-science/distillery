@@ -41,11 +41,6 @@ if not exist %mutable_dir% mkdir %mutable_dir%
 if not exist %config_dir% mkdir %config_dir%
 if not exist %log_dir% mkdir %log_dir%
 
-call :find_erts_dir
-call :find_sys_config
-call :find_vm_args
-call :set_boot_script_var
-
 set service_name=%rel_name%_%rel_vsn%
 set bindir=%erts_dir%\bin
 set progname=erl.exe
@@ -58,6 +53,11 @@ set werl="%bindir%\werl.exe"
 set consolidated_dir=%rootdir%\lib\%rel_name%-%rel_vsn%\consolidated
 set hook_dir=%rel_dir%\hooks
 set command_dir=%rel_dir%\commands
+
+call :find_erts_dir
+call :find_sys_config
+call :find_vm_args
+call :set_boot_script_var
 
 :: Extract node type and name from vm.args
 for /f "usebackq tokens=1-2" %%I in (`findstr /b "\-name \-sname" "%vm_args%"`) do (
